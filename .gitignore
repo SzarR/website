@@ -146,5 +146,6 @@ app.db
 .obsidian/
 
 translate.py
+migrate.py
 consistency-report.md
 site/

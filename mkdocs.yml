@@ -9,18 +9,24 @@ copyright: "&copy; 2024, Nathan Catania"
 theme:
   name: material
   custom_dir: overrides
+  favicon: assets/favicon.png
   #logo: assets/avatar.png
   icon:
     repo: material/github
-    #logo: octicons/cpu-16
-    logo: material/hand-wave
-
-
+    logo: octicons/cpu-16
+    #logo: material/hand-wave
 
   font:
     text: Inter
     code: Noto Sans Mono
-  
+
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - toc.follow
+    - navigation.top
+
   palette:
     # Automatically switches between light & dark modes based on system
     # Palette toggle for light mode
@@ -42,24 +48,26 @@ theme:
         icon: material/circle-half-full
         name: Switch to light mode
 
-
 plugins:
   - search
+  - privacy
   - blog:
       blog_dir: .
       post_url_date_format: yyyy
-      post_url_format: "posts/{slug}"
+      post_url_format: "posts/{file}"
+      pagination_per_page: 5
 
-
-
-      # categories_url_format: "posts/{slug}"
-      
-
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - md_in_html
 
 extra:
   cli: "$ cd /home/nathan"
   generator: false
-  subtitle: "Engineer // Australia // AI // Cybersec"
+  subtitle: "B.Eng (Hons, 1st) // Australia // AI // Cybersec"
   avatar: assets/avatar.png
   socials:
     - linkedin: https://www.linkedin.com/in/nathancatania/

@@ -12,44 +12,40 @@ categories:
 draft: false
 comments: false
 ---
-The post explores deploying applications on AWS EKS with intentional security flaws to test the effectiveness of cloud security vendors' workload protection solutions.
+![](assets/insecure-kubernetes-for-evaluation-purposes.20240212150500200.webp)
+
+This post details the process of setting up applications on AWS EKS with deliberate security vulnerabilities to evaluate cloud security vendors' workload protection capabilities during Proof of Concept/Value tests.
 <!-- more -->
-{{< callout info "Heads Up!" >}}
-This document is a draft & is pending spelling and grammar corrections + citations.
-{{< /callout >}}
 
-This is a quick document that covers my own notes and the steps to follow to deploy an app (Rocket.Chat) using managed Kubernetes in AWS (Amazon Elastic Kubernetes Service, EKS), **delibrately in an insecure manner**, for the purposes of evaluating the workload security offerings of cloud security vendors.
+It includes deploying a containerized public-facing web service (Rocket.Chat) on Amazon's EKS, along with an insecurely configured MongoDB database and AWS S3 public bucket. The setup prioritizes the AWS Management Console over CLI commands, although using AWS CLI and `eksctl` could streamline the process.
 
-This document will cover the deployment of a containerised public facing web service leveraging Kubernetes; specicially Amazon's managed Kubernetes service: EKS (Elastic Kubernetes Service). As part of this exercise, MongoDB and AWS S3 will also be used and configured insecurely.
-
-In terms of methodology, this document will cover the setup of all services using the AWS Management Console (where possible) and NOT via CLI. Almost all of these steps can be replaced and done more succinctly using a combination of the AWS CLI and `eksctl`.
-
-{{< callout danger "Warning!" >}}
-**This exercise delibrately deploys these services in an insecure manner in order to showcase and test the security capabilities of cloud security service providers**. Do not follow this guide for a production deployment or in a non-isolated environment.
-{{< /callout >}}
+!!! danger
+    **This exercise intentionally incorporates insecure configurations to assess the efficacy of cloud security solutions.** It should not be replicated for production use or outside of a controlled environment.
 
 ---
 
 ## 1.0 - Setup Infrastructure
 
-In this section we will deploy the infrastructure and services required for the project. This includes:
+In this section, the following infrastructure and services will be deployed:
 
 * A VM running an outdated version of Ubuntu Server (Ubuntu Server 16.04).
 * An outdated version of MongoDB running on the aforementioned VM (MongoDB Community Edition 4.4.5).
 * An Amazon EKS Cluster in the same VPC as the above VM.
 * An Amazon S3 storage bucket configured for Public Read access.
-* A containized web application that leverages MongoDB as a database (Rocket.Chat)
+* A containerized web application that leverages MongoDB as a database (Rocket.Chat)
 
 ### 1.1 - AWS CLI & `kubectl`
 
 To begin, we need to ensure that we have two CLI tools on our machine to allow us to interact with our Kubernetes cluster once we have set it up:
 
-1. AWS CLI: This is an open-source tool that enables you to interact with AWS services using the CLI.
-2. `kubectl`: This is a tool that enables you to communicate with the Kubernetes API and interact with the cluster.
+1. AWS CLI: Facilitates interaction with AWS services using the CLI.
+2. `kubectl`: Enables communication with the Kubernetes API and interaction with the active cluster.
 
 #### Install Homebrew
 
-Homebrew is a package manager for macOS and we will use it to install the above tools:
+Homebrew is a package manager for macOS and will be used to install both the AWS CLI and `kubectl` tools.
+
+Install Homebrew (if it has not been already):
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -67,13 +63,13 @@ Homebrew 4.0.28
 
 #### Install & Configure AWS CLI
 
-Install AWS CLI using Homebrew:
+Install the AWS CLI using Homebrew:
 
 ```
 brew install awscli
 ```
 
-Verify that the CLI was installed correctly:
+Verify that the AWS CLI was installed correctly:
 
 ```
 aws --version
@@ -81,19 +77,19 @@ aws --version
 aws-cli/2.13.1 Python/3.11.4 Darwin/22.3.0 exe/x86_64 prompt/off
 ```
 
-Next, we need to configure AWS CLI and authenticate it with our AWS account:
+Next, configure the AWS CLI and authenticate it with the AWS account that will be used:
 
-1. Navigate to the security center of your AWS account: [console.aws.amazon.com/iamv2/home#/security_credentials](https://console.aws.amazon.com/iamv2/home#/security_credentials)
+1. Navigate to the security center of the selected AWS account: [console.aws.amazon.com/iamv2/home#/security_credentials](https://console.aws.amazon.com/iamv2/home#/security_credentials)
 
 2. Scroll down to the *Access keys* section and select **Create access key**.
 
-![13](13.png)
+![13](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748007.png)
 
 3. Note down both the **Access key** and **Secret access key** (the Secret access key will not be shown again after you leave this page). Click **Done**.
 
-![14](14.png)
+![14](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748019.png)
 
-4. Run the following command to authenticate the AWS CLI using your Access key and Secret access key:
+4. Run the following command to authenticate the AWS CLI using the Access key and Secret access key:
 
    ```
    aws configure
@@ -104,7 +100,7 @@ Next, we need to configure AWS CLI and authenticate it with our AWS account:
    Default output format [None]: json
    ```
 
-5. Check that your credentials were saved correctly:
+5. Check that the credentials were saved correctly:
 
    ```
    aws configure list
@@ -127,7 +123,7 @@ Install the latest version of `kubectl` using Homebrew:
 brew install kubectl
 ```
 
-Note that the version of `kubectl` must be within one minor version difference of the cluster. That is, if the cluster is configured to use v1.27, then we must use `kubectl` v1.26, v1.27, or v1.28.
+Note that the version of `kubectl` must be within one minor version difference of the cluster. That is, if the cluster is configured to use v1.27, then `kubectl` v1.26, v1.27, or v1.28 must be used.
 
 To install a specific version of `kubectl`, see [here](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/).
 
@@ -148,7 +144,7 @@ Kustomize Version: v4.5.7
 
 To start, we need to provide AWS with the public SSH key that we plan to use to securely log into the VM we will deploy. If you already have a key pair available in AWS, you can skip this step.
 
-If you have an existing keypair on your local system, you can use that, otherwise follow the instructions [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to generate a new keypair. The following steps will guide you through uploading the public key from your system into AWS so that we can assign it to our VM.
+If you have an existing key pair on your local system, you can use that, otherwise follow the instructions [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to generate a new key pair. The following steps will guide you through uploading the public key from your system into AWS so that we can assign it to our VM.
 
 1. Open the [Key Management System (KMS) Console](https://console.aws.amazon.com/kms) of AWS.
 2. Click the **Actions** button and select **Import key pair**.
@@ -156,7 +152,7 @@ If you have an existing keypair on your local system, you can use that, otherwis
 
 3. Next, select the `id_rsa.pub` file associated with your public key to upload, OR paste in the public key contents.
 
-* Assuming your keypair is saved in the default location (`~/.ssh/id_rsa.pub`), open Terminal and execute the following command to get the contents of the public key:
+* Assuming your key pair is saved in the default location (`~/.ssh/id_rsa.pub`), open Terminal and execute the following command to get the contents of the public key:
 
   ```
   cat ~/.ssh/id_rsa.pub
@@ -170,15 +166,15 @@ If you have an existing keypair on your local system, you can use that, otherwis
   (this is not a real public key)
   ```
 
-![5](5.png)
+![5](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748051.png)
 
 #### Deploy the VM
 
-1. From the [AWS EC2 Console](https://console.aws.amazon.com/ec2), click **Instances** in the left side-bar, then and click **Launch instances**.
+1. From the [AWS EC2 Console](https://console.aws.amazon.com/ec2), click **Instances** in the left sidebar, then and click **Launch instances**.
 2. Set the name of the VM to `MongoDB`
 3. When prompted to select an OS / AMI image, select **Browse more AMIs**.
 
-![3](3.png)
+![3](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748080.png)
 
 3. Click the **Community AMIs** tab, then search for `ami-0e554a91eb4e7b6d7` (the AMI ID of the Ubuntu Server 16.04 LTS image we need). 
 
@@ -186,11 +182,11 @@ If you have an existing keypair on your local system, you can use that, otherwis
 
    * Alternatively, search for `ubuntu 16.04 amd64` and select an available AMI. Be mindful of the publish dates: the more out-of-date, the better.
 
-![1](1.png)
+![1](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748110.png)
 
-4. Back on the main **Launch an instance** screen, under** **Instance type**, select the cheapest instance with 1 vCPU and 1GB memory. At the time of posting this is `t2.micro` which is also eligible for the AWS Free Tier.
+4. Back on the main **Launch an instance** screen, under **Instance type**, select the cheapest instance with 1 vCPU and 1GB memory. At the time of posting this is `t2.micro` which is also eligible for the AWS Free Tier.
 
-![2](2.png)
+![2](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748131.png)
 
 5. Under the **Key pair** section, select either an existing public key, or the name of the public key you uploaded earlier.
 
@@ -205,16 +201,19 @@ If you have an existing keypair on your local system, you can use that, otherwis
      2. Type: All ICMP - IPv4
         Source type: My IP
 
-   * These rules allow you to connect to your MongoDB VM (and test connectivity to it using `ping`) across the internet. To secure this access (somewhat), we are limiting connections to only those from your own IP address.
+   * These rules will allow you to connect to your MongoDB VM (and test connectivity to it using `ping`) across the internet. To secure this access (somewhat), we are limiting connections to only those from your own IP address.
 
-     WARNING: In practice, this is not recommended for internal services and your should close off ALL public exposure to the VM to ensure it is secured. VMs should be managed via an inside-out ZTNA service like Cloudflare, Zscaler, or Tailscale to ensure that *nothing* is exposed directly to the internet.
+    !!! danger
+        In practice, this is not recommended for internal services and your should close off ALL public exposure to the VM to ensure it is secured.
+        
+        VMs should be managed via an inside-out ZTNA service like Cloudflare, Zscaler, or Tailscale to ensure that *nothing* is exposed directly to the internet.
 
-![6](6.png)
+![6](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748171.png)
 
 7. Under **Configure storage**, set the root volume to 15GB of `gp2` storage.
 8. Finished! When you are ready to deploy the VM, click **Launch instance**.
 
-![7](7.png)
+![7](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748207.png)
 
 #### Connect to the VM
 
@@ -323,7 +322,9 @@ netstat -ln
     udp        0      0 0.0.0.0:68              0.0.0.0:*
 ```
 
-From the above we can see that MongoDB is only listening on localhost, meaning that it won't be able to accept connections from other machines. To fix this, we need to configure MongoDB to accept connections from all network interfaces, not just localhost. Open the MongoDB configuration file in a text editor:
+From the above we can see that MongoDB is only listening on localhost, meaning that it won't be able to accept connections from other machines. To fix this, we need to configure MongoDB to accept connections from **all** network interfaces, not just `localhost`.
+
+Open the MongoDB configuration file in a text editor:
 
 ```
 sudo nano /etc/mongod.conf
@@ -374,8 +375,7 @@ Questions? Try the MongoDB Developer Community Forums
 >
 ```
 
-You can press CTRL+C to quit the shell.
-
+You can press `CTRL+C` to quit the shell.
 
 
 #### Create a user and database for the web app to use
@@ -398,15 +398,15 @@ Paste in the below making sure to substitute the password and database name as n
 db.createUser({user: "rocketchat", pwd: "youwillneverguess", roles: [{role: "readWrite", db: "rocketchat"}]})
 ```
 
-This command will create a user named  `rocketchat` with the insecure password `youwillneverguess` and grant it `readWrite` permissions on the `rocketchat` database. You will need the username/password combo later on when we deploy the webapp.
+This command will create a user named  `rocketchat` with the insecure password `youwillneverguess` and grant it `readWrite` permissions on the `rocketchat` database. You will need the username/password combo later on when we deploy the web app.
 
-Check that the user was created sucessfully:
+Check that the user was created successfully:
 
 ```
 db.getUser("rocketchat")
 ```
 
-The output should be similar to the below. If you see `null`, ensure you are using the right database (ie: `use rocketchat`):
+The output should be similar to the below. If you see `null`, ensure you are using the right database (i.e.: `use rocketchat`):
 
 ```
 > use rocketchat
@@ -434,35 +434,35 @@ switched to db rocketchat
 
 ### 1.4 - Configure an Amazon EKS Cluster
 
-Kubernetes is an open-source platform designed to automate deploying, scaling, and operating application containers. Kubernetes orchestration allows you to build application services that span multiple containers, schedule those containers across a cluster, scale those containers, and manage the health of those containers over time.
+Kubernetes is an open-source platform designed to automate the deployment, scale, and operation of application containers. Kubernetes allows you to build application services that span multiple containers, schedule those containers across a cluster, scale those containers, and manage the health of those containers over time.
 
 Amazon EKS (Elastic Kubernetes Service) is a managed service used to run Kubernetes on AWS.
 
-In this project, we'll be using using EKS to manage the deployment and scaling of our containerized web application and the underlying EC2 host VMs (AKA "Workers") that the containers will run on.
+In this project, we will be using EKS to manage the deployment and scaling of our containerized web application and the underlying EC2 host VMs (AKA "Workers") that the containers will run on.
 
 
 
 #### Create an IAM Role for the EKS Cluster
 
-Because the Kubernetes cluster managed by EKS makes calls to other AWS services on our behalf (like EC2 to bring up a worker), we need to create a role that restricts *what* EKS can do. Letting it have free reign within our entire AWS account would be very bad.
+Because the Kubernetes cluster managed by EKS makes calls to other AWS services on our behalf (like EC2 to bring up a worker), we need to create a role that restricts *what* EKS can do. Letting it have free rein within our entire AWS account would be very bad.
 
-Amazon has instructions on how to do this for EKS [here](https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html#create-service-role), or you can follow the instuctions below:
+Amazon has instructions on how to do this for EKS [here](https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html#create-service-role), or you can follow the instructions below:
 
 1. Open the [AWS IAM Console](https://console.aws.amazon.com/iam/home?#roles).
 
 2. From the left-side menu, under **Access Management**, select **Roles**. On the next screen, select **Create role**:
 
-![4](4.png)
+![4](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748230.png)
 
 3. For *Trusted entity type* select **AWS service**.
 4. For *Use case* select **EKS** from the dropdown list, then select **EKS - Cluster**. Click **Next**.
 
-![31](31.png)
+![31](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748252.png)
 
 5. On the *Add permissions* screen, don't change anything, just click **Next** again.
 6. On the next screen, set the role name as `eksClusterRole` and make sure that you see `AmazonEKSClusterPolicy` listed as a policy name under the *Add permissions* table. Click **Create role** when you are ready to finish configuration.
 
-![32](32.png)
+![32](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748278.png)
 
 #### Create an IAM Role for the Worker Node Group
 
@@ -483,13 +483,13 @@ We need to create a separate role with different permissions that will be assign
 
 [Kubernetes secrets](https://kubernetes.io/docs/concepts/configuration/secret/) allow sensitive information like passwords, credentials, and API keys that need to be leveraged by underlying services to be stored centrally within the Kubernetes API data store (etcd), and not within the application source code or config itself.
 
-By default, secrets are stored in the Kubernetes API are unencrypted. EKS supports secrets encryption using an encryption key stored in the AWS Key Management Service (KMS), and it is best practice to enable this. To do so however, we need to create a symetrical encryption key within KMS
+By default, secrets are stored in the Kubernetes API are unencrypted. EKS supports secrets encryption using an encryption key stored in the AWS Key Management Service (KMS), and it is best practice to enable this. To do so however, we need to create a symmetrical encryption key within KMS
 
 1. Go to the AWS KMS Console: [https://console.aws.amazon.com/kms](https://console.aws.amazon.com/kms)
 2. Click **Create key**.
 3. Select **Symmetric** as they *Key type*, and **Encrypt and decrypt** for the *Key usage* option. Click **Next**.
 4. Give the key a name and description, eg: `EKS_Secrets_Key`, and click **Next**.
-5. Leave all key administrators as blank and de-select the option to allow admins to delete the key. Click **Next**.
+5. Leave all key administrators as blank and deselect the option to allow admins to delete the key. Click **Next**.
 6. For the *Key usage permissions* step, select the `eksClusterRole` you created above. Click **Next**.
 7. Click **Finish** on the summary page to create the key.
 
@@ -500,17 +500,17 @@ By default, secrets are stored in the Kubernetes API are unencrypted. EKS suppor
 1. Open the [AWS EKS Console](https://console.aws.amazon.com/eks).
 1. From the **Add cluster** dropdown menu, select **Create**.
 
-![33](33.png)
+![33](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748300.png)
 
 3. For *Name*, enter `testing-cluster`.
 4. For *Kubernetes version*, select the highest version available (1.27 at the time of writing)
 5. For *Cluster service role*, select the `eksClusterRole` you created earlier.
 
-​		![9](9.png)
+​		![9](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748327.png)
 
 6. Under *Secrets encryption*, check **Turn on envelope encryption of Kubernetes secrets using KMS** and select the `EKS_Secrets_Key` that you created earlier from the *KMS key* dropdown. Click **Next** to proceed.
 
-​		![10](10.png)
+​		![10](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748350.png)
 
 7. Under *Networking* select:
    * The VPC that cluster resources will be provisioned in.
@@ -526,15 +526,15 @@ By default, secrets are stored in the Kubernetes API are unencrypted. EKS suppor
 
 Your cluster will take several minutes to create, so now is the perfect time to take a break!
 
-![11](11.png)
+![11](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748373.png)
 
 Once your cluster is created, take note of the API server endpoint and the OpenID Connect provider URL:
 
-![12](12.png)
+![12](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748396.png)
 
 #### Copy the cluster config to `kubectl`
 
-`kubectl` will be out primary way of interacting with the cluster, so we need to provide it with configuration to be able to securely authenticate and connect to the Kubernetes API of our cluster.
+`kubectl` will be our primary way of interacting with the cluster, so we need to provide it with configuration to be able to securely authenticate and connect to the Kubernetes API of our cluster.
 
 First, verify that your cluster is active and that your AWS CLI is authenticated correctly:
 
@@ -549,7 +549,7 @@ aws eks --region ap-southeast-2 describe-cluster --name testing-cluster --query 
 "ACTIVE"
 ```
 
-Next, use the AWS CLI to get the the required config from our cluster and apply it to `kubectl`:
+Next, use the AWS CLI to get the required config from our cluster and apply it to `kubectl`:
 
 ```
 aws eks update-kubeconfig --name <cluster-name>
@@ -575,17 +575,17 @@ In this step we will create the worker nodes that the master kubernetes node (de
 
 1. From the `testing-cluster` details page, click the **Compute** tab, then under *Node groups*, click **Add node group**:
 
-![15](15.png)
+![15](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748444.png)
 
 2. Set the node group *name* to **node_group1**.
 3. For *Node IAM role*, select the **EKSWorkerNodePolicy** role created earlier, then click **Next**.
 
-![34](34.png)
+![34](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748462.png)
 
-4. On the next screen, under *Node group compute configuration*, leave **Amazon Linux 2** selected, but change the *Instance type* to `t3.medium` .  This is the instance type of the worker nodes that the cluster will spin up/down as needed.
-   * When picking an instance size, don't overly skimp out on compute here to save costs. Kubernetes is finicky with resources and going to small will result in failed pod deployments due to a lack of resources.
+4. On the next screen, under *Node group compute configuration*, leave **Amazon Linux 2** selected, but change the *Instance type* to `t3.medium`.  This is the instance type of the worker nodes that the cluster will spin up/down as needed.
+   * When picking an instance size, don't overly skimp out on compute here to save costs. Kubernetes is finicky with resources and going too small will result in failed pod deployments due to a lack of resources.
 
-![35](35.png)
+![35](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748486.png)
 
 4. Under *Node group scaling configuration*, leave the default values as 2/2/2. Click **Next**.
 
@@ -595,11 +595,11 @@ In this step we will create the worker nodes that the master kubernetes node (de
    * Check the box **Configure remote access to nodes**. This is useful for troubleshooting, but does increase our attack surface a bit. When prompted, select the same EC2 key pair used for the MongoDB VM from before, and the same security group, **mgmt-access**. The latter will restrict remote access to only our own IP address.
    * Click **Next** to continue.
 
-![36](36.png)
+![36](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748509.png)
 
 6. When you have finished reviewing the configuration, click **Create** to finish. This will begin the process to create the worker node(s) according to our config (which may take several minutes).
 
-![37](37.png)
+![37](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748532.png)
 
 To verify that the worker nodes are active, we can use `kubectl`:
 
@@ -613,29 +613,28 @@ ip-172-31-7-192.ap-southeast-2.compute.internal    Ready    <none>   19m   v1.27
 
 Likewise, if you return to the details page of the EKS cluster and select the *Compute* tab, you will now see the node group and the provisioned worker nodes:
 
-![38](38.png)
+![38](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748558.png)
 
 
 
 ### 1.4 - Create a Public Amazon S3 Bucket
 
-In this section we will be creating a new S3 bucket to hold scripted backups from MongoDB, but the bucket will be configured to allow for Public Read; creating a point where data can be breached and siphoned.
+In this section, we will be creating a new S3 bucket to hold scripted backups from MongoDB. The bucket will be configured to allow for Public Read access; creating a point where data can be breached and siphoned.
 
-{{< callout danger "Warning!" >}}
-NEVER DO THIS IN PRODUCTION OR IN A REAL ENVIRONMENT!
-{{< /callout >}}
+!!! danger
+    **Never do this in a real production environment or with real data!**
 
 #### Create a new public bucket
 
 Go to the [S3 Management Console](https://console.aws.amazon.com/s3/) and select **Create Bucket**.
 
-![16](16.png)
+![16](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748589.png)
 
 Provide a name for the bucket (eg: `totallysecurebucket`), select the region (eg: `ap-southeast-2`), and ensure (under *Object Ownership*) that ACLs are disabled.
 
-![17](17.png)
+![17](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748621.png)
 
-Under the section *Block Public Access settings for this bucket*, de-select the **Block all public access** checkbox and check the acknowledgement checkbox that appears at the bottom. This will make the bucket completely public.
+Under the section *Block Public Access settings for this bucket*, deselect the **Block all public access** checkbox and check the acknowledgement checkbox that appears at the bottom. This will make the bucket completely public.
 
 #### Add a bucket policy
 
@@ -643,7 +642,7 @@ To make objects in the bucket publicly readable, we need to create and apply a p
 
 From the S3 Management Console, click the name of the bucket created above and select the **Permissions** tab. Scroll down and under the *Bucket Policy* section, click **Edit**.
 
-![18](18.png)
+![18](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748648.png)
 
 Paste in the following (overwriting all existing text) and substitute `<your-bucket-name>` with the name of your S3 bucket:
 
@@ -666,11 +665,11 @@ Paste in the following (overwriting all existing text) and substitute `<your-buc
 
 Click **Save changes** to finish.
 
-![19](19.png)
+![19](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748676.png)
 
 Your bucket will now have an orange `Publicly accessible` warning underneath it's name, and under the **Permissions** tab in the *Permissions overview* section, *Access* should now say *Public*.
 
-![20](20.png)
+![20](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748704.png)
 
 
 
@@ -682,7 +681,7 @@ The moment of truth is finally here: We can now use everything we have done so f
 
 In Kubernetes, an **Ingress object** is a set of rules to route external HTTP(S) traffic to internal services within the cluster. These rules can include things like "send all traffic for `myapp.mydomain.com` to the `my-app` service running in k8s". In our context, we will have an ingress that routes `chat.domain.com` to our Rocket.Chat service so that external users can reach the UI.
 
-An Ingress Controller is effectively the "router" that enforces and implements any routes (Ingresses) defined. It is essentially a type of load balancer that can interpret the Ingress rules. Ingress rules are essentially useless without an Ingress Controller to enforce them. In our context, we will be leveraging Nginx as the Ingress Controller.
+An Ingress Controller is effectively the "router" that enforces and implements any routes (Ingresses) defined. It is essentially a type of load balancer that can interpret the Ingress rules. Ingress rules are useless without an Ingress Controller to enforce them. In our context, we will be leveraging Nginx as the Ingress Controller.
 
 To allow the outside world to reach our Nginx Ingress Controller, we will be creating a "LoadBalancer" service in Kubernetes. As our cluster is running in AWS, this results in an AWS Elastic Load Balancer (ELB) instance being created and used. The ELB distributes incoming application traffic across multiple targets, such as EC2 instances, and in this case, the NGINX Ingress Controller.
 
@@ -775,7 +774,9 @@ kubectl describe certificate rocket-tls --namespace rocket
 
 #### Install Helm and Add Repositories
 
-Helm is a package manager for Kubernetes. Helm Charts can be published to Helm and describe how a package should be deployed. Helm is installed on the **local machine** from which you are running `kubectl` commands from.
+*Helm* is a package manager for Kubernetes, and *Helm Charts* are published to Helm and describe how a package should be deployed.
+
+Helm is installed on the **local machine** from which you are running `kubectl` commands from.
 
 Install Helm (macOS):
 
@@ -801,13 +802,13 @@ helm repo update
 
 Nginx will front-end the Rocket.Chat service and secure the connectivity between the user and app with TLS.
 
-Add the ingress-nginx Helm repo:
+Add the `ingress-nginx` Helm repo:
 
 ```
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx && helm repo update
 ```
 
-Install the Nginx Ingress Controller and set the service type to be a LoadBalancer. This will automatically create a new LoadBalancer in our AWS environment. As per the recommended configuration, the Ingress Controller will also be installed in it's own namespace:
+Install the Nginx Ingress Controller and set the service type to be a LoadBalancer. This will automatically create a new LoadBalancer in our AWS environment. As per the recommended configuration, the Ingress Controller will also be installed in its own namespace:
 
 ```
 helm install nginx-ingress ingress-nginx/ingress-nginx --set controller.service.type=LoadBalancer --namespace ingress-nginx --create-namespace
@@ -839,9 +840,9 @@ Next, we need to add a CNAME record for the domain/subdomain we wish to make the
 
 Note that you don't have to use `chat` as the subdomain. Use whatever you like as long as you own the domain and have access to the external DNS records for it.
 
-In my case, I will be using the sub-domain `chat.lightwave.cloud`, so I would add a CNAME record to my `lightwave.cloud` domain's DNS that points `chat` to `a51aca6bf603b441597c74851e09f1ef-206136540.ap-southeast-2.elb.amazonaws.com`:
+In my case, I will be using the subdomain `chat.lightwave.cloud`, so I would add a CNAME record to my `lightwave.cloud` domain's DNS that points `chat` to `a51aca6bf603b441597c74851e09f1ef-206136540.ap-southeast-2.elb.amazonaws.com`:
 
-![21](21.png)
+![21](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748730.png)
 
 You can check whether your record was added correctly by using `nslookup`:
 
@@ -892,9 +893,9 @@ cert-manager-webhook-6c8c98cc6-vmgpt       1/1     Running   0          54s
 
 Next, we need to create configuration for cert-manager that tells it to use Let's Encrypt to issue certificates.
 
-To do this, we will create and apply an **Issuer** configuration to cert-manager which Kubernetes uses to abstract certficate issuing details. Note that an **Issuer** is local to a specified namespace, whereas a **ClusterIssuer** works across all namespaces. In this case, because we only have the one app, we will use a standard **Issuer**.
+To do this, we will create and apply an **Issuer** configuration to cert-manager which Kubernetes uses to abstract certificate issuing details. Note that an **Issuer** is local to a specified namespace, whereas a **ClusterIssuer** works across all namespaces. In this case, because we only have the one app, we will use a standard **Issuer**.
 
-Create a new yaml file:
+Create a new YAML file:
 
 ```
 nano issuer.yaml
@@ -924,7 +925,7 @@ spec:
           class: nginx
 ```
 
-Save the file (CTRL+X, then `Y`), then apply it with `kubectl`:
+Save the file (`CTRL+X`, then `Y`), then apply it with `kubectl`:
 
 ```
 kubectl apply -f issuer.yaml --namespace rocket
@@ -934,15 +935,15 @@ kubectl apply -f issuer.yaml --namespace rocket
 
 #### Create an Ingress
 
-The next step is to create an Ingress resource that references our web app (ie: Rocket.Chat). It will also use the Issuer we just created to handle the TLS certificate issuance.
+The next step is to create an Ingress resource that references our web app (i.e.: Rocket.Chat). It will also use the Issuer we just created to handle the TLS certificate issuance.
 
-Create a new yaml file called `rocket-ingress.yaml`:
+Create a new YAML file called `rocket-ingress.yaml`:
 
 ```
 nano rocket-ingress.yaml
 ```
 
-Paste in the following ensuring that you substitute both instances of `chat.domain.com` with your actual domain/sub-domain:
+Paste in the following ensuring that you substitute both instances of `chat.domain.com` with your actual domain/subdomain:
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -974,7 +975,7 @@ spec:
 
 This file (when applied) creates an Ingress that routes incoming traffic to our Rocket.Chat service on port 3000 (Rocket.Chat is configured to listen on port 3000 for incoming connections by default).
 
-Note that the configuration also includes a `tls` block that specifies a `secretName`. This secret, `rocket-tls`, is where cert-manager will store the issued certificate. The  certificate will be automatically renewed by cert-manager as long as the Ingress exists.
+Note that the configuration also includes a `tls` block that specifies a `secretName`. This secret, `rocket-tls`, is where cert-manager will store the issued certificate. The certificate will be automatically renewed by cert-manager as long as the Ingress exists.
 
 Apply the Ingress:
 
@@ -998,9 +999,9 @@ For our last step, we need to actually deploy the Rocket.Chat web app. To ensure
 
 A **Deployment** in Kubernetes is an object that orchestrates the creation and management of Pod instances. A Deployment describes the desired state for Pods, such as the Docker image to use, the number of Pod replicas you want running, and other configuration details. Deployments use a template to create the necessary Pods and keep track of their status. If a Pod goes down, the Deployment will automatically create a new one to keep the desired number of replicas.
 
-A **Service** in Kubernetes is an abstraction which defines a logical set of Pods (typically operated by a Deployment) and a policy by which to access them (sometimes called a micro-service). Services enable communication between different parts of an application, or between different applications entirely, both inside and outside of the cluster. They can also provide discovery and load balancing features for micro-services.
+A **Service** in Kubernetes is an abstraction which defines a logical set of Pods (typically operated by a Deployment) and a policy by which to access them (sometimes called a microservice). Services enable communication between different parts of an application, or between different applications entirely, both inside and outside the cluster. They can also provide discovery and load balancing features for microservices.
 
-Create a new yaml file called `rocketchat-deployment.yaml`:
+Create a new YAML file called `rocketchat-deployment.yaml`:
 
 ```
 nano rocketchat-deployment.yaml
@@ -1056,7 +1057,7 @@ spec:
 
 ```
 
-Save the file (CTRL+X, then `Y`) and apply it to deploy Rocket.Chat:
+Save the file (`CTRL+X`, then `Y`) and apply it to deploy Rocket.Chat:
 
 ```
 kubectl apply -f rocketchat-deployment.yaml
@@ -1083,13 +1084,13 @@ kubectl describe service rocketchat -n rocket
 
 We should not be able to go to visit our domain (`chat.domain.com`) in a browser to check that the web app is live. If everything is OK, then the Rocket.Chat UI should load and be secured with an SSL certificate issued from Let's Encrypt:
 
-![22](22.png)
+![22](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748757.png)
 
 ---
 
 ## 2.0 - Weakening Security
 
-In this section we will further weaken the security of our deployment by opening up permissions on our containers and VMs, storing secrets insecurely on a container volume, and configuring MongoDB to backup to the public S3 bucket.
+In this section we will further weaken the security of our deployment by opening up permissions on our containers and VMs, storing secrets insecurely on a container volume, and configuring MongoDB to back up to the public S3 bucket.
 
 
 
@@ -1097,9 +1098,8 @@ In this section we will further weaken the security of our deployment by opening
 
 In Kubernetes, permissions are set through Role-Based Access Control (RBAC). We are going to set apply cluster-admin privileges to Rocket.Chat, which will allow it to perform any action against the Kubernetes API - including viewing secrets and modifying permissions.
 
-{{< callout danger "Warning!" >}}
-NEVER DO THIS IN PRODUCTION OR IN A REAL ENVIRONMENT!
-{{< /callout >}}
+!!! danger
+    NEVER DO THIS IN PRODUCTION OR IN A REAL ENVIRONMENT!
 
 First, we need to create a new **ClusterRoleBinding**. A ClusterRoleBinding is an object that assigns a **ClusterRole** (essentially permissions at a cluster level) to a specified **service account**. A **service account** is a special kind of account that is intended to be used by a program running inside a Pod. Each Service Account is tied to a specific namespace, and it is automatically given an associated secret. This secret can be used to interact with the Kubernetes API.
 
@@ -1109,7 +1109,7 @@ In short: There is a service account that is already used by our Rocket.Chat app
 
 #### Create and apply a new ClusterRoleBinding
 
-To create a new ClusterRoleBinding (`rocket-admin`) and assign it to the approproate service account (`default`) in our `rocket` namespace:
+To create a new ClusterRoleBinding (`rocket-admin`) and assign it to the appropriate service account (`default`) in our `rocket` namespace:
 
 ```
 kubectl create clusterrolebinding rocket-admin --clusterrole=cluster-admin --serviceaccount=rocket:default
@@ -1175,9 +1175,9 @@ Subjects:
 
 ### 2.2 - Set the MongoDB VM to have elevated privileges
 
-AWS uses a service called Identity and Access Management (IAM) to handle access control. An IAM role is an identity that can be assigned permissions and then attached to resources (like EC2 instances) so that these resources can take actions in AWS on your behalf.
+AWS uses a service called **Identity and Access Management (IAM)** to handle access control. An IAM role is an identity that can be assigned permissions and then attached to resources (like EC2 instances) so that these resources can take actions in AWS on your behalf.
 
-In this section we will create a new IAM role with policy `ec2:*` which allows any action to be taken on any EC2 resource by anything assigned with this role (which is incredibly dangerous!). We will also assign `PutObject` and `GetObject` permissions towards our Public S3 bucket so that we can configure MongoDB to backup to the bucket (see section 2.4 further below).
+In this section we will create a new IAM role with policy `ec2:*` which allows any action to be taken on any EC2 resource by anything assigned with this role (which is incredibly dangerous!). We will also assign `PutObject` and `GetObject` permissions towards our Public S3 bucket so that we can configure MongoDB to back up to the bucket (see section 2.4 further below).
 
 
 
@@ -1208,18 +1208,18 @@ Click **JSON** and paste the following into the policy editor:
 }
 ```
 
-![25](25.png)
+![25](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748780.png)
 
 Click the **Review policy** button to continue.
 
-On the next screen, name your policy `EC2FullAccess` and provide it with a meaningful description. Eg: `A very bad role that grants a resource full control of EC2 resources. For testing/demo purposes only.`
+On the next screen, name your policy `EC2FullAccess` and provide it with a meaningful description. EG: `A very bad role that grants a resource full control of EC2 resources. For testing/demo purposes only.`
 
 Both **EC2** and **S3** should be referenced as services defined in the policy. AWS will have derived these up from the JSON entered above:
 
 *  For **EC2** ensure that the access level is **Full access**, and the resource is **All resources**.
 * For **S3** ensure that the access level is **Limited: Read, Write**, and the resource references your bucket name.
 
-![26](26.png)
+![26](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748806.png)
 
 Once you are satisfied, click the **Create policy button**.
 
@@ -1231,19 +1231,19 @@ From the IAM Console, this time select **Roles** in the left sidebar, then click
 
 For **Step 1 - Select trusted entity**, ensure that **AWS service** is selected as the entity type, and **EC2** is selected as the use case.
 
-![23](23.png)
+![23](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748828.png)
 
 Click next to continue.
 
 On the next screen (*Step 2 - Add permissions*), select the **EC2FullAccess** policy you created (you may need to search for it).
 
-![24](24.png)
+![24](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748858.png)
 
 Click next to continue.
 
 On the final screen, name the role **EC2FullAccessRole**, optionally provide a description, then click the **Create role** button.
 
-![27](27.png)
+![27](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748892.png)
 
 
 
@@ -1251,17 +1251,17 @@ On the final screen, name the role **EC2FullAccessRole**, optionally provide a d
 
 In the EC2 Console, select the VM that you deployed MongoDB to. Click on the **Actions** button and navigate to **Security > Modify IAM role**:
 
-![28](28.png)
+![28](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748918.png)
 
 In the **IAM role** dropdown, find and select the **EC2FullAccessRole** role that was created above. Click **Update IAM role** to save your changes.
 
-![29](29.png)
+![29](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748940.png)
 
 
 
 ### 2.3 - Store a set of credentials insecurely
 
-Kubernetes Secrets exists as a means to securely communicate sensitive values (ie: passwords, API keys, private keys, etc) to pods; preventing the need to store these in ENV variables or config files within the container. To further increase the vulnerability of our deployment, we will do the latter and use a **ConfigMap** to store our MongoDB connection string. This ConfigMap will then be mounted to our Rocket.Chat container as a volume.
+Kubernetes Secrets exists as a means to securely communicate sensitive values (ie: passwords, API keys, private keys, etc.) to pods; preventing the need to store these in ENV variables or config files within the container. To further increase the vulnerability of our deployment, we will do the latter and use a **ConfigMap** to store our MongoDB connection string. This ConfigMap will then be mounted to our Rocket.Chat container as a volume.
 
 #### Create a ConfigMap
 
@@ -1341,7 +1341,7 @@ kubectl apply -f rocketchat-deployment.yaml
 
 Kubernetes will notice that the deployment configuration has changed, and it will start a rolling update. It will gradually take down the old pod and bring up a new pod with the updated configuration (resulting in a minimal disruption to service).
 
-If `kubectl` responds to say that the yaml file is unchanged, you can force Kubernetes to replace the current deployment. Just note that this will cause disruption as old pods are deleted *first* before new ones are created.
+If `kubectl` responds to say that the YAML file is unchanged, you can force Kubernetes to replace the current deployment. Just note that this will cause disruption as old pods are deleted *first* before new ones are created.
 
 ```
 kubectl replace --force -f rocketchat-deployment.yaml
@@ -1378,13 +1378,12 @@ mongodb://rocketchat:youwillneverguess@172.31.15.204:27017/rocketchat
 
 
 
-### 2.4 - Configure MongoDB to Backup to the Public S3 Bucket
+### 2.4 - Configure MongoDB to back up to the Public S3 Bucket
 
-We will now configure MongoDB to automatically backup to the S3 bucket we created at the start of this document (the one with public read access). The VM has already been configured with permissions to read and write to the bucket as part of the policy and role we assigned to it in Section 2.2. All that is left to do is create a script and cronjob to manage the backup. `mongodump` will be used to create the backups and this was automatically installed on the system alongside MongoDB.
+We will now configure MongoDB to automatically back up to the S3 bucket we created at the start of this document (the one with public read access). The VM has already been configured with permissions to read and write to the bucket as part of the policy and role we assigned to it in Section 2.2. All that is left to do is create a script and cronjob to manage the backup. `mongodump` will be used to create the backups and this was automatically installed on the system alongside MongoDB.
 
-{{< callout danger "Warning!" >}}
-Storing backups in a public bucket is a really dumb and stupid idea. **Never do this!**
-{{< /callout >}}
+!!! danger
+    Storing backups in a public bucket is a really dumb and stupid idea. **Never do this!**
 
 
 
@@ -1392,7 +1391,7 @@ Storing backups in a public bucket is a really dumb and stupid idea. **Never do 
 
 Our backup script will leverage the AWS CLI to perform the upload to the S3 bucket, so it needs to be installed on the VM.
 
-Connect to the MongoDB VM using your SSH keypair:
+Connect to the MongoDB VM using your SSH key pair:
 
 ```
 ssh ubuntu@<your-vm-public-ip>
@@ -1454,7 +1453,7 @@ Save and close the file (CTRL+X, then `Y`)
 
 The script uses `mongodump` to create a backup of the MongoDB database. It then compresses the backup into a tarball with `tar -zcvf`, removes the uncompressed backup directory with `rm -rf`, uploads the tarball to your S3 bucket with `aws s3 cp`, and then removes the local tarball.
 
-Because the VM was given an IAM role that included S3 read/write access to the bucket, there is no need to configure the AWS CLI or provide credentials: The AWS SDK and AWS CLI tools will automatically use the attached IAM role to get temporary credentials. AWS then automatically rotates these credentials multiple times per day to ensure on-going security.
+Because the VM was given an IAM role that included S3 read/write access to the bucket, there is no need to configure the AWS CLI or provide credentials: The AWS SDK and AWS CLI tools will automatically use the attached IAM role to get temporary credentials. AWS then automatically rotates these credentials multiple times per day to ensure ongoing security.
 
 
 
@@ -1479,11 +1478,11 @@ upload: backups/mongodb-202307240734.tar.gz to s3://your-bucket-name/mongodb-202
 EOF
 ```
 
-![30](30.png)
+![30](assets/insecure-kubernetes-for-evaluation-purposes.20240212133748977.png)
 
 #### Automate the Backup with Cron
 
-Currently the backup script must be manually invoked, however we can use `cron` to run the script on a schedule.
+Currently, the backup script must be manually invoked, however we can use `cron` to run the script on a schedule.
 
 Check that `cron` is running:
 
@@ -1513,7 +1512,7 @@ Paste the following at the bottom of the crontab:
 
 Assuming `nano` is your text editor, save and exit using CTRL+X, then `Y`.
 
-The text tells `cron` to automatically run a backup at 3am everyday. It redirect all output into a log file called `backup.log` which can be reviewed if troubleshooting is required.
+The text tells `cron` to automatically run a backup at 3am every day. It redirects all output into a log file called `backup.log` which can be reviewed if troubleshooting is required.
 
 
 
@@ -1522,4 +1521,3 @@ The text tells `cron` to automatically run a backup at 3am everyday. It redirect
 ## Finish
 
 🥳 Congratulations! You now have an insecure deployment of Rocket.Chat on a managed Kubernetes cluster in Amazon AWS. 
-

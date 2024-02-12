@@ -39,7 +39,7 @@
             {# config.site_name #}
                 <div class="headercli">
                         <span class="headercli__mark" style="margin-right: 5px;">></span>
-                        <span class="headercli__text">{{ config.extra.cli }}</span>
+                        <span class="headercli__text"><a class="header-sitename-link" href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}">{{ config.extra.cli }}</a></span>
                         <div class="cursor"></div>
                         
                 </div>
