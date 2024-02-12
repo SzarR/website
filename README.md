@@ -52,8 +52,14 @@ mkdocs serve -a 127.0.0.1:8888
 
 ## Deploying
 Push changes to the main branch.
-
 Cloudflare Pages will automatically rebuild the site and deploy it.
+
+If dependencies change, re-run:
+```
+pip freeze > requirements.txt
+```
+
+If deploying from scratch for the first time, follow [this CF documentation for deploying a Mkdocs site](https://developers.cloudflare.com/pages/framework-guides/deploy-an-mkdocs-site/).
 
 
 ## Posts
