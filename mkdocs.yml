@@ -1,7 +1,7 @@
 site_name: Robert W Szarek
 site_url: "https://szarr.github.io"
 site_description: "Official Website of Nathan Catania"
-repo_url: https://github.com/szarr/website
+repo_url: https://github.com/SzarR/website
 repo_name: szarr/website
 edit_uri: edit/master/docs/
 copyright: "&copy; 2025. Last Updated on March 8, 2025"
@@ -10,14 +10,9 @@ theme:
   name: material
   custom_dir: overrides
   favicon: assets/favicon.png
-  #logo: assets/avatar.png
-  icon:
-    repo: material/github
-    logo: octicons/cpu-16
-    #logo: material/hand-wave
 
   font:
-    text: Inter
+    text: Roboto
     code: Noto Sans Mono
 
   features:
@@ -56,7 +51,7 @@ plugins:
       blog_dir: .
       post_url_date_format: yyyy
       post_url_format: "posts/{file}"
-      pagination_per_page: 5
+      pagination_per_page: 3
 
 markdown_extensions:
   - tables
