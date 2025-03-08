@@ -190,3 +190,11 @@ h1, h2{
     50% { opacity: 1; }
     100% { opacity: 0; }
   }
+
+/* Customize the subtitle (the text under the title) */
+.md-header-nav .md-header-nav__subtitle {
+  font-size: 2.5rem;  /* Adjust the size */
+  font-weight: bold;  /* Make it bold */
+  color: #333;        /* Optional: change the color */
+  text-transform: uppercase;  /* Optional: capitalize the text */
+}

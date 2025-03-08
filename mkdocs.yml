@@ -1,10 +1,10 @@
-site_name: Nathan Catania
-site_url: "https://nathancatania.com"
+site_name: Robert W Szarek
+site_url: "https://szarr.github.io"
 site_description: "Official Website of Nathan Catania"
-repo_url: https://github.com/nathancatania/website
-repo_name: nathancatania/website
+repo_url: https://github.com/szarr/website
+repo_name: szarr/website
 edit_uri: edit/master/docs/
-copyright: "&copy; 2024, Nathan Catania"
+copyright: "&copy; 2025. Last Updated on March 8, 2025"
 
 theme:
   name: material
@@ -24,7 +24,8 @@ theme:
     - navigation.instant
     - navigation.instant.progress
     - navigation.tracking
-    - toc.follow
+    - toc.inline
+    - toc.permalink
     - navigation.top
 
   palette:
@@ -65,15 +66,15 @@ markdown_extensions:
   - md_in_html
 
 extra:
-  cli: "$ cd /home/nathan"
+  cli: "SzarR"
+  bio: "<br> <br> Robert Szarek is an I/O Psychologist turned Data Scientist. His primary field is within people analytics, where he leverages machine learning and natural language processing to craft compelling stories around organizational behavior. Data science has provided me with the technological tools required, while my academic degree provides a comprehensive understanding of human behavior in the workplace. The intersection of these two fields provides the opportunity to make a significant impact in the workplace. Aside from work, I’m an aviation geek with a FAA pilot’s license with more than 200 hours logged in the past decade. <br> <br>"
   generator: false
-  subtitle: "B.Eng (Hons, 1st) // Australia // AI // Cybersec"
+  subtitle: "Senior Data Scientist"
   avatar: assets/avatar.png
   socials:
     - linkedin: https://www.linkedin.com/in/nathancatania/
+    - github: https://www.github.com/szarr
+    - email: szarekr@gmail.com
 
 extra_css:
   - stylesheets/extra.css
-
-extra_javascript:
-  - javascripts/extra.js
