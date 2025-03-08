@@ -194,7 +194,7 @@ h1, h2{
 /* Customize the subtitle (the text under the title) */
 .md-header-nav .md-header-nav__subtitle {
   font-size: 2.5rem;  /* Adjust the size */
-  font-weight: bold;  /* Make it bold */
+  /*font-weight: bold;  /* Make it bold */
   color: #333;        /* Optional: change the color */
   text-transform: uppercase;  /* Optional: capitalize the text */
 }

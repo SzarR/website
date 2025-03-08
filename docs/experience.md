@@ -1,11 +1,11 @@
-# Experience
 
+# Experience
 ## Human Factors Researcher
 **Federal Aviation Administration,** *April 2024 - Present*
 
-- Run parametric analyses to determine significant differences in flight crew performing in Level-D flight simulators.
+- Run chi-square and t-test analyses to determine significant differences in flight crew performance in flight simulators.
 - Design and execute scientific experiments.
-- Build code infrastructure in R to automate and scale hundreds of statistical tests to identify differences.
+- Build code infrastructure in R to automate, test and scale hundreds of statistical tests.
 
 ## Senior Data Scientist
 **Unum,** *June 2021 - Present* 
@@ -36,4 +36,7 @@
 - Ran statistical analyses to drive organizational change including: ANOVA, t-test, chi-square, linear, multiple and logistic regression, correlations, factor and cluster analysis, etc.
 - Developed machine learning algorithms (regression) to set cut-scores on high-stakes employment tests administered nationally to over 100,000 candidates.
 
+## Education
 
+- M.A., Industrial-Organizational Psychology, Elmhurst College, 2012
+- B.A., Psychology & Philogosophy, Northeastern Illinois University, 2009
