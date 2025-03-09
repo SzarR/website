@@ -5,6 +5,7 @@ date:
 ---
 
 # Happy new years eve!
+A quick Test
 
 We hope you are all having fun and wish you all the best for the new year!
 <!-- more -->
