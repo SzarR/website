@@ -4,7 +4,7 @@ site_description: "Official Website of Robert Szarek"
 repo_url: https://github.com/SzarR/website
 repo_name: szarr/website
 edit_uri: edit/master/docs/
-copyright: "&copy; 2025. Last Updated on March 8, 2025"
+copyright: "&copy; 2025. v1.0. Last Updated on March 8, 2025"
 
 theme:
   name: material
@@ -52,6 +52,9 @@ plugins:
       post_url_date_format: yyyy
       post_url_format: "posts/{file}"
       pagination_per_page: 3
+ # - gallery:
+ #     examples_dirs: docs/images
+ #     gallery_dirs: docs/generated/images
 
 markdown_extensions:
   - tables
@@ -62,14 +65,17 @@ markdown_extensions:
 
 extra:
   cli: "SzarR"
-  bio: "<br> <br> Robert Szarek is an I/O Psychologist turned Data Scientist. His primary field is within people analytics, where he leverages machine learning and natural language processing to craft compelling stories around organizational behavior. Data science has provided me with the technological tools required, while my academic degree provides a comprehensive understanding of human behavior in the workplace. The intersection of these two fields provides the opportunity to make a significant impact in the workplace. Aside from work, I’m an aviation geek with a FAA pilot’s license with more than 200 hours logged in the past decade. <br> <br>"
+  bio: "<br> <br> Hi, I'm Robert! I hold a Master’s degree in Industrial-Organizational Psychology, and my professional journey began in test development and psychometrics. Over time, my passion for data and analytics naturally guided me toward the fields of machine learning and data science. Today, I specialize in people analytics, where I combine statistical modeling with insights into human behavior. In my day-to-day work, I use R, Linux and Python to create custom machine learning models. These models allow me to tackle a variety of challenges, from analyzing open-ended text responses to predicting employee turnover. Additionally, I enjoy building customized Shiny dashboard apps that help solve a specific use case, like network analysis. Data science offers me the perfect intersection of my technical programming skills and my ability to solve complex, business-critical problems. When I'm not diving into data, you can find me in the sky, flying airplanes, or out in nature, enjoying the tranquility and beauty of the great outdoors.
+ <br> <br>"
   generator: false
   subtitle: "Senior Data Scientist"
   avatar: assets/avatar.png
   socials:
-    - linkedin: https://www.linkedin.com/in/nathancatania/
+    - linkedin: https://www.linkedin.com/in/robert-szarek-3163a632/
     - github: https://www.github.com/szarr
-    - email: szarekr@gmail.com
+    - email: mailto:szarekr@gmail.com
+    - file: https://szarr.github.io/resume/resume.html
+    - file-pdf: https://szarr.github.io/resume/resume.pdf
 
 extra_css:
   - stylesheets/extra.css

@@ -1,4 +1,3 @@
-
 # Experience
 ## Human Factors Researcher
 **Federal Aviation Administration,** *April 2024 - Present*
@@ -40,3 +39,22 @@
 
 - M.A., Industrial-Organizational Psychology, Elmhurst College, 2012
 - B.A., Psychology & Philogosophy, Northeastern Illinois University, 2009
+
+## Professional Affilitiations
+
+### Private Pilot License, ASEL
+
+### The Yellow Tulip
+
+- Volunteered from June 2022 through January 2025
+- Develop a Tableau Dashboard to streamline survey responses to monitor, in real time, volunteer sentiment.
+
+### Society for Industrial Psychologists (SIOP)
+
+- Built a custom R package for annual membership data cleaning
+- Laid the foundation for a data infrastructure plan to help streamline the access and retention of sensitive data.
+
+### Fox Flying Club Board Member
+
+- Investigated financing options, expected maintenance, and member interest in flying new aircraft types.
+- Performed data analysis on membership sentiment to establish long term strategy for the club.
