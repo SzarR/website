@@ -1,4 +1,4 @@
-site_name: Robert W Szarek
+site_name: Robert W. Szarek
 site_url: "https://szarr.github.io"
 site_description: "Official Website of Robert Szarek"
 repo_url: https://github.com/SzarR/website
@@ -68,7 +68,7 @@ extra:
   bio: "<br> <br> Hi, I'm Robert! I hold a Master’s degree in Industrial-Organizational Psychology, and my professional journey began in test development and psychometrics. Over time, my passion for data and analytics naturally guided me toward the fields of machine learning and data science. Today, I specialize in people analytics, where I combine statistical modeling with insights into human behavior. In my day-to-day work, I use R, Linux and Python to create custom machine learning models. These models allow me to tackle a variety of challenges, from analyzing open-ended text responses to predicting employee turnover. Additionally, I enjoy building customized Shiny dashboard apps that help solve a specific use case, like network analysis. Data science offers me the perfect intersection of my technical programming skills and my ability to solve complex, business-critical problems. When I'm not diving into data, you can find me in the sky, flying airplanes, or out in nature, enjoying the tranquility and beauty of the great outdoors.
  <br> <br>"
   generator: false
-  subtitle: "Senior Data Scientist"
+  subtitle: "Senior Data Scientist @ Unum"
   avatar: assets/avatar.png
   socials:
     - linkedin: https://www.linkedin.com/in/robert-szarek-3163a632/
