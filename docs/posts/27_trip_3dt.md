@@ -25,17 +25,17 @@ Some things that did not quite work out as I had hoped regarding the flight incl
 
 The day began uneventfully with a wake-up at 7AM to make it for the pre-flight of our Piper Archer by 0900. With weather forecast as VFR for the duration of the day, I knew we would not an issue to make a go/no-go decision. Before hand, Tomek and I agreed that I would fly the leg, mostly under simulated IMC to 3D2. Tomek would captain the return leg. The planned routing for my sector is portrayed below:
 
-![png](images/img_0042-1.png)
+![png](images/27_img_3.png)
 
 The green dots all around indicate favorable VFR weather conditions. Most of the flight was planned over terrain, in the rural parts of Illinois and Wisconsin. I specifically selected VOR and waypoints as much as possible to maximize my ability to create a legitimate flight plan in the 430. Wheels up time was approximately 1030, with an initial cruising altitude of 3,000 feet climbing 7,500 after we clear the Bravo shelf. I picked up flight following from Milwaukee Approach when we were 15 to the west, and utilized that feature until approximately SUE, where we disconnected to make preparations for the IAP RNAV 32 into 3D2. Flight following was a great asset to the flight, even though we barely received any advisories because of the low level of traffic in the area. We additionally were ADS-B equipped so traffic advisories appeared on our IPads.
 
 Much of the flight was uneventful, save for the fuel pressure indication that was almost at 0 during the climb phase to 7,500. This was the highest altitude I have ever personally flown at, so I was initially not so suspicious about the indication as Tomek was. Leveling the aircraft off, the gauge picked up, but turning the electrical auxiliary fuel pump ON made the needle jump even more. I figured the supplemental fuel pump can help us in case the engine driven fuel pump was not producing enough power for the flight. There was no hesitancy from the engine whatsoever, and that weighed into my calculations as well. Throughout a majority of the flight, there was not much to see visually, so it was refreshing for me to be able to concentrate fully on the instruments to log the necessary simulated IMC for my instrument rating. Tomek did a good job scanning for traffic, but on an October Monday morning, there did not seem to be much in the air within these regions of rural Wisconsin. He provided me w its a lot of useful insights concerning the programming and execution of various bits concerning the 430.
 
-![jpg](img_0044.jpg)
+![jpg](images/27_img_1.jpg)
 
 The winds at the destination were variable, anywhere from 190 to 260 at around 8 knots with infrequent gusts to about 13 knots. This probably did not cause as much concern for me as it should have – the landing was a bit rough to say the least. I elected for the paved runway which was short, narrow, and sporting a healthy cross-wind as well. If the crosswind component was exceeding 12 knots or so, I think I would have elected for the grass strip at the airport. Around SUE, I began making the mental calculations to ensure we cleared AQECY at 2,500. A picture of the procedure I was setting up for is referenced below:
 
-![png](img_0047.png)
+![png](images/27_img_2.png)
 
 This is where the flight became the most beneficial for me. Tomek, is very proficient at instrument flight, he was able to provide me with all his knowledge thus far regarding the proper execution of such an RNAV approach. We first conducted an approach briefing where we reviewed the critical pieces concerning this chart, such things as:
 
@@ -56,4 +56,4 @@ It was a difficult landing for me, particularly because I am used to urban runwa
 
 Exploring the city of Ephraim and Fish Creek was exciting – this is the perfect time of the year to plan such travels. The Fall foliage combined with the off season really makes the local scene relaxed, mellow, and feeling a bit abandoned. It was great for a day trip. Peninsula State Park was a treasure to behold, with beautiful sights all around. Some of these pictures will be uploaded and shared on this blog.
 
-![jpg](img_1978.jpg)
+![jpg](images/27_img_4.jpg)

@@ -12,7 +12,7 @@ comments: false
 
 Yesterday, my instructor and I planned to complete the long cross country portion for the instrument rating Part 61 requirements. The original plan was to fly KDPA -> C15 -> KDVN -> KDPA. However, upon further research, it was determined that we didn’t actually have to fly to three different airports.
 
-![png](images/post_33_1.png)
+![png](images/33_img_1.png)
 
 We therefore shifted our flight plan several times until we finally arrived at flying down to KVLA for the VOR/DME 18 approach which included an ARC. VOR/DME ARC approaches are quite rare in the Midwest, so in order to get the experience of flying it we planned to fly to Vandalia.
 
@@ -28,7 +28,7 @@ Approach 1: VOR/DME 18
 
 This approach was pretty nutty. First of all, our GPS430 gave us the STEEP TURN AHEAD warning in the message box when we were flying towards UFJUV, the IAF for the DME ARC. I descended down to 2,300 and performed a left hand turn at 30 degrees bank to intercept the DME ARC and fly it at 7NM. The lateral limits there is +/- 1NM on either side. Therefore, if during the ARC I was at 6.84, I’d still be .84NM away from the protected area to the left of the ARC. I followed this ARC through to the IF, as seen below:
 
-![jpg](images/post_33_2.jpg)
+![jpg](images/33_img_2.jpg)
 
 The IF was OPUHY, where a turn to the final approach course of 179 degrees magnetic was required. You then follow this to the FAF (VLA). Once crossing the FAF you are allowed to descend down to 1140 MSL where you’ll be at the MDA and in a position to make a landing, remember, three things need to occur for you to make the landing and go under the MDA:
 

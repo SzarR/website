@@ -51,7 +51,7 @@ plugins:
       blog_dir: .
       post_url_date_format: yyyy
       post_url_format: "posts/{file}"
-      pagination_per_page: 3
+      pagination_per_page: 5
  # - gallery:
  #     examples_dirs: docs/images
  #     gallery_dirs: docs/generated/images

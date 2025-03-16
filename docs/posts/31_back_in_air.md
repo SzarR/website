@@ -16,32 +16,32 @@ Given that I haven’t been up in a while, I was eager to get flying again and w
 
 Yesterday, 6/18, my friend Tomasz called me up at the last minute and asked if I was interested in going up with him. The plan was going to be a few takeoffs and landings at KDKB, along with two approaches and a holding pattern using the SR-55 A/P. I happily obliged as I have not been up for a long time and felt my skills beginning to erode and get rusty, plus it was a good excuse to just get out of the house and get moving again. We agreed to meet at the hangs at 17:00. A very thorough pre-flight followed, checking such things as:
 
-![jpg](images/post_31_1.jpg)
+![jpg](images/31_img_1.jpg)
 
 Each main landing gear wheel has a brake wear sticker affixed to it. The brake wear sticker, if black, specifies that the brakes were overheated during landing/taxi and should be inspected. Light grey means your good to go. 
 
-![jpg](images/post_31_2.jpg)
+![jpg](images/31_img_2.jpg)
 
 Oil is another area of common inspection. The dipstick was indicating 6 quarts, so we decided to add a quart of oil to bring the total up to 7 quarts, which sits right in the middle between the minimum, 6 quarts, and the maximum, 8 quarts.
 
 Of course we checked a plethora of other things on the airplane as well, these just happen to be two elements I happened to snap a picture of during pre-flight. Some other photos:
 
-![jpg](images/post_31_3.jpg)
-![jpg](images/post_31_4.jpg)
+![jpg](images/31_img_3.jpg)
+![jpg](images/31_img_4.jpg)
 
 We pulled the airplane out and into the alley:
 
-![jpg](images/post_31_6.jpg)
+![jpg](images/31_img_6.jpg)
 
 We next focused on configuring the avionics, headsets, and routing. We checked the applicable weather, NOTAMs, TFRs, and any restrictions that would pose an issue to the flight we were aiming to complete for the day. The plan was to fly to KDKB to execute the RNAV GPS 27 instrument procedure, discontinuing the approach at DA and flying straight to the holding pattern. Afterward, several takeoffs and landings were in order to get a feel for the airplane and it’s landing and takeoff capabilities in different types of configurations.
 
-![jpg](images/post_31_7.jpg)
+![jpg](images/31_img_7.jpg)
 
 You can see KDKB loaded in GPS1 on the bottom of the screen, the engine is stabilized and running, and we have just obtained Information Charlie, specifying weather with ceilings > 5,000 feet and visibility > 5 SM. Winds were 100/09. We taxied for RWY10 with E F, and took off shortly thereafter.
 
 After takeoff, we continuously had the ALT2 indication steady on. 
 
-![jpg](images/post_31_8.jpg)
+![jpg](images/31_img_8.jpg)
 
 ALT2 indication steady ON.
 

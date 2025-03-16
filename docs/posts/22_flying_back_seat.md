@@ -18,5 +18,5 @@ Upon leaving the airport, I noticed another club member getting ready to fly in 
 
 After the procedures at DKB were completed, we proceeded to shoot the VOR-A approach at C09, Morris. The approach is based from the JOT VOR, with a circling minimum published for the approach because the final approach course does not bring you directly in for a runway, but rather, into the airport environment. Once visual with the field, the expectation would be that the pilot would execute a circling maneuver for either of the runways. The last approach was the ILS 02L into DPA with Chicago Approach coordinating the entire procedure on 133.50. Very fun to listen to the pilot call and request the IFR procedure. Chicago Approach was very accommodating. Some photos of the day’s flying activities are posted below:
 
-![jpg](img_0013.jpg)
-![jpg](img_0016.jpg)
+![jpg](images/22_img_1.jpg)
+![jpg](images/22_img_2.jpg)
