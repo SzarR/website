@@ -4,7 +4,7 @@ site_description: "Official Website of Robert Szarek"
 repo_url: https://github.com/SzarR/
 repo_name: szarr/website
 edit_uri: edit/master/docs/
-copyright: "&copy; 2025. v1.0. Last Updated on March 16, 2025"
+copyright: "&copy; 2025. v1.1. Last Updated on April 10, 2025"
 
 theme:
   name: material
