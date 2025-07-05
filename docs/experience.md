@@ -1,4 +1,12 @@
 # Experience
+
+## Technical Solutions Lead, Talent Analytics
+**Netflix,** *June 2025 - Present*
+
+- Build Tableau dashboard to support various talent-related research efforts for I&D and Capacity Modeling.
+- Build Open Source R Shiny Dashboards for workforce planning and forecasting.
+- Serve as a stakeholder in data infrastructure guidance and future technical direction of dashboards at Netflix.
+
 ## Human Factors Researcher
 **Federal Aviation Administration,** *April 2024 - Present*
 
@@ -7,7 +15,7 @@
 - Build code infrastructure in R to automate, test and scale hundreds of statistical tests.
 
 ## Senior Data Scientist
-**Unum,** *June 2021 - Present* 
+**Unum,** *June 2021 - June 2025* 
 
 - Built a machine learning model to analyze gender-pay equity.
 - Used natural language processing for topic modelling to summarize open-ended survey questions.
