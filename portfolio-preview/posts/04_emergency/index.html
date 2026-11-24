@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html data-theme="dark" lang="en">
+<head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="" name="description"/><title>Emergencies — Robert W. Szarek</title><script>try{document.documentElement.dataset.theme=localStorage.getItem("portfolio-theme")==="light"?"light":"dark"}catch{}</script><link href="../../styles.css" rel="stylesheet"/></head>
+<body>
+<div class="page">
+<header><span aria-label="Robert W. Szarek" class="site-label"><svg aria-label="rws" class="monogram" role="img" viewbox="0 0 77 38"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65"><path d="M4 29V10m0 7c3-7 8-9 13-6"></path><path d="m22 10 7 19 9-18 9 18 7-19" transform="translate(-5 0)"></path><path d="M80 12c-3-2-6-3-9-3-5 0-8 2-8 5 0 4 4 5 9 6s9 2 9 5-4 5-9 5c-4 0-8-1-11-4" transform="translate(-12 0)"></path></g></svg></span><nav aria-label="Main navigation"><a href="../../">Home</a><a aria-current="page" href="../../blog/">Blog</a><button aria-controls="side-menu" aria-expanded="false" class="menu-toggle" type="button">Contact <span aria-hidden="true">＋</span></button><button aria-label="Switch to light mode" class="theme-toggle" type="button"><svg aria-hidden="true" class="sun" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path></svg><svg aria-hidden="true" class="moon" viewbox="0 0 24 24"><path d="M20 15a8.5 8.5 0 0 1-11-11A8.5 8.5 0 1 0 20 15Z"></path></svg></button></nav><div hidden="" id="side-menu"><a href="https://szarr.github.io/resume/resume.pdf" rel="noopener" target="_blank">Résumé</a><a href="mailto:szarekr@gmail.com">Email</a><a href="https://www.linkedin.com/in/robert-szarek-3163a632/" rel="noopener" target="_blank">LinkedIn</a><a href="https://github.com/SzarR" rel="noopener" target="_blank">GitHub</a></div></header>
+<main><article class="blog-article"><header class="article-heading"><a class="back-link" href="../../blog/">All posts</a><h1>Emergencies</h1><time datetime="2015-03-25">March 25, 2015</time><div class="post-tags"><a class="post-tag" href="../../blog/?tag=aviation">Aviation</a></div></header><div class="article-body"><p>If emergency strikes during your next flight, will you be ready to act efficiently? As a student pilot working toward my PPL this year, I have treated emergency procedures as a pivotal cornerstone of my flight training. For me, the thought of an emergency happens fairly regularly, and because of it, I am able to plan accordingly. A once famous quote states: “A pilot can be disappointed, but should never be surprised.” Taxi and takeoff briefings are instrumental toward the success of encountering an engine-out scenario after takeoff. Referencing current aerodome charts, minimum turn back altitudes, and suitable alternative landing scenarios should all be briefed. Taking it a step further, a glance through the emergency procedures chapter in my Cessna 172P Information Manual, Section 3, outlines a plethora of quick-action checklists available for utilization. As far as these checklists are concerned, these must be ingrained in the memory of a serious aviator because time will not be on your side.</p>
+<p>What are some of these procedures for encountering emergencies when the engine is turning? I have outlined a select few below:</p>
+<p>Engine Failure during takeoff roll</p>
+<pre><code>Throttle — IDLE.
+Brakes — APPLY.
+Wing Flaps — RETRACT.
+Mixture — IDLE CUT-OFF.
+Ignition Switch — OFF.
+Master Switch — OFF.
+</code></pre>
+<p>Engine Failure immediately after takeoff</p>
+<pre><code>Airspeed — 65 KIAS (flaps UP) 60 KIAS (flaps DOWN).
+Mixture — IDLE CUT-OFF.
+Fuel Selector Valve — PUSH DOWN AND ROTATE TO OFF.
+Ignition Switch — OFF.
+Wing Flaps — AS REQUIRED.
+Master Switch — OFF.
+</code></pre>
+<p>Engine failure during flight (Restart procedures)</p>
+<pre><code>Airspeed — 65 KIAS.
+Carburetor Heat — ON.
+Fuel Selector Valve — BOTH.
+Mixture — RICH.
+Ignition Switch — BOTH (or Start if propeller is stopped).
+Primer — IN and LOCKED.
+</code></pre>
+<p>In reference to my previous posting about the Checklist Manifesto book, checklists should be short enough to remember and utilize. They should not be the length of the book. They should focus on the essential aspects of the aircraft, which primarily deal with the engine and fuel. Troubleshooting a failed engine after takeoff is a risky maneuver, which is why the second checklist deals primarily with securing the aircraft for impact. The third checklist assumes the power loss occurs at cruise level, which typically affords the pilot a few minutes of valuable time to troubleshoot the scenario.</p>
+<p>Remember, on the 172P, the lift-to-drag ratio on the 172P is approximately 9 to 1, which means for every 1,000 feet down, the aircraft is able to travel 9,000 feet. In order to maximize the LD ratio, use the manufacturer’s recommended airspeed of 65 KIAS.</p></div><nav aria-label="More posts" class="post-pagination"><a href="../03_checklists/"><span>Older post</span>Checklists</a><a href="../05_back/"><span>Newer post</span>Back in the Air</a></nav></article></main><footer><span class="version-badge">v0.1</span><span>Last updated <time datetime="2026-11-23">November 23, 2026</time></span></footer>
+</div><script>
+const toggle=document.querySelector('.theme-toggle');
+function updateLabel(){toggle.setAttribute('aria-label',document.documentElement.dataset.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
+updateLabel();
+const menuButton=document.querySelector('.menu-toggle'),menu=document.getElementById('side-menu');
+function closeMenu(){menu.hidden=true;menuButton.setAttribute('aria-expanded','false')}
+menuButton.addEventListener('click',()=>{const opening=menu.hidden;menu.hidden=!opening;menuButton.setAttribute('aria-expanded',String(opening))});
+document.addEventListener('click',e=>{if(!menu.contains(e.target)&&!menuButton.contains(e.target))closeMenu()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden){closeMenu();menuButton.focus()}});
+
+toggle.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('portfolio-theme',next)}catch{}updateLabel()});
+</script></body></html>

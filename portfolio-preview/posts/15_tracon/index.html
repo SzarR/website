@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html data-theme="dark" lang="en">
+<head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="" name="description"/><title>ORD TRACON Q&amp;A — Robert W. Szarek</title><script>try{document.documentElement.dataset.theme=localStorage.getItem("portfolio-theme")==="light"?"light":"dark"}catch{}</script><link href="../../styles.css" rel="stylesheet"/></head>
+<body>
+<div class="page">
+<header><span aria-label="Robert W. Szarek" class="site-label"><svg aria-label="rws" class="monogram" role="img" viewbox="0 0 77 38"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65"><path d="M4 29V10m0 7c3-7 8-9 13-6"></path><path d="m22 10 7 19 9-18 9 18 7-19" transform="translate(-5 0)"></path><path d="M80 12c-3-2-6-3-9-3-5 0-8 2-8 5 0 4 4 5 9 6s9 2 9 5-4 5-9 5c-4 0-8-1-11-4" transform="translate(-12 0)"></path></g></svg></span><nav aria-label="Main navigation"><a href="../../">Home</a><a aria-current="page" href="../../blog/">Blog</a><button aria-controls="side-menu" aria-expanded="false" class="menu-toggle" type="button">Contact <span aria-hidden="true">＋</span></button><button aria-label="Switch to light mode" class="theme-toggle" type="button"><svg aria-hidden="true" class="sun" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path></svg><svg aria-hidden="true" class="moon" viewbox="0 0 24 24"><path d="M20 15a8.5 8.5 0 0 1-11-11A8.5 8.5 0 1 0 20 15Z"></path></svg></button></nav><div hidden="" id="side-menu"><a href="https://szarr.github.io/resume/resume.pdf" rel="noopener" target="_blank">Résumé</a><a href="mailto:szarekr@gmail.com">Email</a><a href="https://www.linkedin.com/in/robert-szarek-3163a632/" rel="noopener" target="_blank">LinkedIn</a><a href="https://github.com/SzarR" rel="noopener" target="_blank">GitHub</a></div></header>
+<main><article class="blog-article"><header class="article-heading"><a class="back-link" href="../../blog/">All posts</a><h1>ORD TRACON Q&amp;A</h1><time datetime="2017-02-10">February 10, 2017</time><div class="post-tags"><a class="post-tag" href="../../blog/?tag=aviation">Aviation</a></div></header><div class="article-body"><p>My monthly flying club meeting hosted a very informative Q&amp;A session with an FAA controller this evening. Among some of the topics we discussed included:</p>
+<pre><code>TCAS RESOLUTION Scenarios
+VFR Corridors including the “Eisenhower Transition”
+Different frequencies / calling up procedure terminology
+</code></pre>
+<p>Some of the interesting things I learned included the checking in procedure, and how simple it must be in the beginning. ACID, VFR Request. In other words, Archer 41598, VFR request. First however, you must monitor the frequency in order not to step on another pilot’s transmission. It may seem that the frequency is quiet but, in actuality, the controller may be simultaneously communicating on multiple frequencies. It’s not always clear whether the controller is busy or not, therefore, one can easily query the controller concerning how busy operations currently are. Important ORD frequencies for Flight Following include:</p>
+<pre><code>North Satellite: 120.55
+Southeast Satellite: 128.20
+South Satellite: 119.35
+Southwest Satellite: 133.50
+</code></pre>
+<p>Another interesting snippet is that the approach controller may sometimes clear you through the Class D, such as Gary Airspace, but not always so. This most certainly depends upon whether Gary Airspace is experiencing any inbound/outbound traffic and would preferably like to talk with the pilot directly. If operations are otherwise quiet however, Gary may just allow Chicago Approach to continue to control me.</p>
+<p>When instrument training, it is mandatory to request it and receive approval from ATC, per AIM paragraph 4-3-21-E.</p>
+<p>Not much was touched upon TFRs, which always will remain a grey area for me to discuss.</p>
+<p>Another aspect I forgot to mention is the corridor along Lake Shore Drive. The controller recommended a maximum of 2,000 feet MSL to not become an issue for landing traffic at MDW when the 22’s are active. This point will help ensure I always remain at approximately 1,800 MSL or so around this sector of the scenic flight.</p>
+<p>Finally, part of the presentation touched upon the famous “Eisenhower Transition” where a pilot flies west/east bound along I290 at approximately 1,700 feet MSL in order to “cut through” below the Class Bravo airspace and just 0.5 NM north of the Class Charlie. However, with such a low altitude, I have serious hesitations for performing this maneuver with passengers on board. Perhaps my mind will change on this if I one day fly the transition with another pilot.</p></div><nav aria-label="More posts" class="post-pagination"><a href="../14_ir_training/"><span>Older post</span>Instrument Training</a><a href="../16_spring_xride_17/"><span>Newer post</span>Spring Checkride 2017</a></nav></article></main><footer><span class="version-badge">v0.1</span><span>Last updated <time datetime="2026-11-23">November 23, 2026</time></span></footer>
+</div><script>
+const toggle=document.querySelector('.theme-toggle');
+function updateLabel(){toggle.setAttribute('aria-label',document.documentElement.dataset.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
+updateLabel();
+const menuButton=document.querySelector('.menu-toggle'),menu=document.getElementById('side-menu');
+function closeMenu(){menu.hidden=true;menuButton.setAttribute('aria-expanded','false')}
+menuButton.addEventListener('click',()=>{const opening=menu.hidden;menu.hidden=!opening;menuButton.setAttribute('aria-expanded',String(opening))});
+document.addEventListener('click',e=>{if(!menu.contains(e.target)&&!menuButton.contains(e.target))closeMenu()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden){closeMenu();menuButton.focus()}});
+
+toggle.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('portfolio-theme',next)}catch{}updateLabel()});
+</script></body></html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html data-theme="dark" lang="en">
+<head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="" name="description"/><title>Summer 2020 Schedule — Robert W. Szarek</title><script>try{document.documentElement.dataset.theme=localStorage.getItem("portfolio-theme")==="light"?"light":"dark"}catch{}</script><link href="../../styles.css" rel="stylesheet"/></head>
+<body>
+<div class="page">
+<header><span aria-label="Robert W. Szarek" class="site-label"><svg aria-label="rws" class="monogram" role="img" viewbox="0 0 77 38"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65"><path d="M4 29V10m0 7c3-7 8-9 13-6"></path><path d="m22 10 7 19 9-18 9 18 7-19" transform="translate(-5 0)"></path><path d="M80 12c-3-2-6-3-9-3-5 0-8 2-8 5 0 4 4 5 9 6s9 2 9 5-4 5-9 5c-4 0-8-1-11-4" transform="translate(-12 0)"></path></g></svg></span><nav aria-label="Main navigation"><a href="../../">Home</a><a aria-current="page" href="../../blog/">Blog</a><button aria-controls="side-menu" aria-expanded="false" class="menu-toggle" type="button">Contact <span aria-hidden="true">＋</span></button><button aria-label="Switch to light mode" class="theme-toggle" type="button"><svg aria-hidden="true" class="sun" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path></svg><svg aria-hidden="true" class="moon" viewbox="0 0 24 24"><path d="M20 15a8.5 8.5 0 0 1-11-11A8.5 8.5 0 1 0 20 15Z"></path></svg></button></nav><div hidden="" id="side-menu"><a href="https://szarr.github.io/resume/resume.pdf" rel="noopener" target="_blank">Résumé</a><a href="mailto:szarekr@gmail.com">Email</a><a href="https://www.linkedin.com/in/robert-szarek-3163a632/" rel="noopener" target="_blank">LinkedIn</a><a href="https://github.com/SzarR" rel="noopener" target="_blank">GitHub</a></div></header>
+<main><article class="blog-article"><header class="article-heading"><a class="back-link" href="../../blog/">All posts</a><h1>Summer 2020 Schedule</h1><time datetime="2020-09-19">September 19, 2020</time><div class="post-tags"><a class="post-tag" href="../../blog/?tag=aviation">Aviation</a></div></header><div class="article-body"><p>I’ve been able to do quite a bit of flying this year for a change. I have logged three particularly fun flights in the last several weeks:</p>
+<ul>
+<li>On 9/7/20, Tomasz invited me to fly with him to Poplar Grove, to visit and relate to some of the history of the airport, but also, to fly a yellow 1946 Piper Cub with him! It was exhilarating, to fly an airplane with no electrical system and a couple of gauges and a stick. He let me have the airplane and control for at least thirty minutes, unloggable of course, as I do not have my tail wheel endorsement. This was probably the most fun flight I have had all year long.</li>
+<li>Second flight was my first actual IMC/IFR flight with Terry. We filed DPA-DKB-DPA. Terry flew the DPA-DKB leg, and I flew back, the DKB-DPA leg. We were straight IMC the whole way through, and I was given the ILS 02L approach into DPA. I did a great job, with just some work I’ll need to focus on in the future to correct my heading corrections when flying a cross-wind, as I was swinging wildly on the localizer for the approach. My vertical guidance however was spot on.</li>
+<li>My last flight was with Gary, to get my checkout (finally) in the SR-20. It worked out great and I was checked out after only a single flight! I have already made plans to take a few friends on 10/8/20 for a trip.</li>
+</ul></div><nav aria-label="More posts" class="post-pagination"><a href="../33_ir_xc/"><span>Older post</span>Instrument XC Flight</a><a href="../35_new_dawn/"><span>Newer post</span>Flying Update</a></nav></article></main><footer><span class="version-badge">v0.1</span><span>Last updated <time datetime="2026-11-23">November 23, 2026</time></span></footer>
+</div><script>
+const toggle=document.querySelector('.theme-toggle');
+function updateLabel(){toggle.setAttribute('aria-label',document.documentElement.dataset.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
+updateLabel();
+const menuButton=document.querySelector('.menu-toggle'),menu=document.getElementById('side-menu');
+function closeMenu(){menu.hidden=true;menuButton.setAttribute('aria-expanded','false')}
+menuButton.addEventListener('click',()=>{const opening=menu.hidden;menu.hidden=!opening;menuButton.setAttribute('aria-expanded',String(opening))});
+document.addEventListener('click',e=>{if(!menu.contains(e.target)&&!menuButton.contains(e.target))closeMenu()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden){closeMenu();menuButton.focus()}});
+
+toggle.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('portfolio-theme',next)}catch{}updateLabel()});
+</script></body></html>

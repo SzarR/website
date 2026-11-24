@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html data-theme="dark" lang="en">
+<head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="" name="description"/><title>Airplane Shopping — Robert W. Szarek</title><script>try{document.documentElement.dataset.theme=localStorage.getItem("portfolio-theme")==="light"?"light":"dark"}catch{}</script><link href="../../styles.css" rel="stylesheet"/></head>
+<body>
+<div class="page">
+<header><span aria-label="Robert W. Szarek" class="site-label"><svg aria-label="rws" class="monogram" role="img" viewbox="0 0 77 38"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65"><path d="M4 29V10m0 7c3-7 8-9 13-6"></path><path d="m22 10 7 19 9-18 9 18 7-19" transform="translate(-5 0)"></path><path d="M80 12c-3-2-6-3-9-3-5 0-8 2-8 5 0 4 4 5 9 6s9 2 9 5-4 5-9 5c-4 0-8-1-11-4" transform="translate(-12 0)"></path></g></svg></span><nav aria-label="Main navigation"><a href="../../">Home</a><a aria-current="page" href="../../blog/">Blog</a><button aria-controls="side-menu" aria-expanded="false" class="menu-toggle" type="button">Contact <span aria-hidden="true">＋</span></button><button aria-label="Switch to light mode" class="theme-toggle" type="button"><svg aria-hidden="true" class="sun" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path></svg><svg aria-hidden="true" class="moon" viewbox="0 0 24 24"><path d="M20 15a8.5 8.5 0 0 1-11-11A8.5 8.5 0 1 0 20 15Z"></path></svg></button></nav><div hidden="" id="side-menu"><a href="https://szarr.github.io/resume/resume.pdf" rel="noopener" target="_blank">Résumé</a><a href="mailto:szarekr@gmail.com">Email</a><a href="https://www.linkedin.com/in/robert-szarek-3163a632/" rel="noopener" target="_blank">LinkedIn</a><a href="https://github.com/SzarR" rel="noopener" target="_blank">GitHub</a></div></header>
+<main><article class="blog-article"><header class="article-heading"><a class="back-link" href="../../blog/">All posts</a><h1>Airplane Shopping</h1><time datetime="2018-04-16">April 16, 2018</time><div class="post-tags"><a class="post-tag" href="../../blog/?tag=aviation">Aviation</a></div></header><div class="article-body"><p>I was never one to dive into the minutia related aspects of acquiring an aircraft. Especially an aircraft that would serve our vast and varied membership profile. We’ve got folks utilizing our aircraft for diverse missions, whether that’d be training and proficiency, sight-seeing around the local area, or packing up their family and flying out of state for several days. Each of these missions would theoretically require a slightly different aircraft, perhaps one with larger fuel tanks, another with a higher useful load, and another with more power under the hood to get the family at their final destination in a more efficient manner than driving a car. The club board would need to synthesize all the varied opinions and information gleaned from focus groups, and come up with a recommended two to three aircraft to further pursue. These focus groups have already been held, and the findings have revealed to a certain degree, consistency in recommending the following aircraft to add to the ranks of our flying club:</p>
+<pre><code>Cirrus SR-20 (G1/G2)
+Diamond DA-40
+Cessna C-182
+</code></pre>
+<p>Of the three aircraft, the remainder of this post will discuss the first bullet-point: the Cirrus SR-20.</p>
+<p>Cirrus began producing aircraft, or, at least the SR-20 around 1999. Several variations of this aircraft have been produced, including the G1 (1999-2003), G2 (2004-2007) and G6 (current) series. As a club, we’re focusing on the line of Cirrus SR-20 that are either G1 or G2, with a six-pack main instrument display and a price tag &lt; $160,000. It’s easy to find a newer Cirrus aircraft with a price tag greater than $200,000. So what led the club, and particularly me, to like the Cirrus aircraft? Some things include:</p>
+<pre><code>Doors on both sides – and the manner in which they open.
+Cirrus Airframe Parachute System (CAPS)
+Cruising speed of ~155 KIAS
+A healthy useful load
+A sleek, low-wing aircraft
+A roomy, much larger interior than what I’m accustomed to
+A similar fuel-burn profile to other aircraft
+</code></pre>
+<p>The aerodynamics of the aircraft no doubt add to the sleekness and faster cruising speed for the SR-20. It’s an aircraft designed to be flown greater distances and not just utilized for pattern work such as a Cessna 172 or Piper Warrior. For primary training, such an aircraft would make little sense to a student studying for their PPL. Given that our flying club does serve to pilots looking to obtain their wings, an aircraft purchase such as an SR-20 would likely not mean much for the rookie pilot looking to accumulate hours.</p>
+<p>My next blog post will dive into the specifics regarding acquiring a DA-40 aircraft.</p></div><nav aria-label="More posts" class="post-pagination"><a href="../24_cross_pond_2018/"><span>Older post</span>Cross the Pond 2018 - Westbound</a><a href="../25_piper_arrow/"><span>Newer post</span>Piper Arrow &amp; Other News</a></nav></article></main><footer><span class="version-badge">v0.1</span><span>Last updated <time datetime="2026-11-23">November 23, 2026</time></span></footer>
+</div><script>
+const toggle=document.querySelector('.theme-toggle');
+function updateLabel(){toggle.setAttribute('aria-label',document.documentElement.dataset.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
+updateLabel();
+const menuButton=document.querySelector('.menu-toggle'),menu=document.getElementById('side-menu');
+function closeMenu(){menu.hidden=true;menuButton.setAttribute('aria-expanded','false')}
+menuButton.addEventListener('click',()=>{const opening=menu.hidden;menu.hidden=!opening;menuButton.setAttribute('aria-expanded',String(opening))});
+document.addEventListener('click',e=>{if(!menu.contains(e.target)&&!menuButton.contains(e.target))closeMenu()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden){closeMenu();menuButton.focus()}});
+
+toggle.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('portfolio-theme',next)}catch{}updateLabel()});
+</script></body></html>
